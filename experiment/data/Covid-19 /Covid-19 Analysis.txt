@@ -1,0 +1,97 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset = pd.read_csv('complete.csv')
+
+dataset.head()
+
+dataset.tail()
+
+print(dataset.shape)
+
+print(dataset.columns)
+
+print(dataset.info())
+
+dataset.describe()
+
+dataset.describe(include=['object', 'bool'])
+
+dataset.sort_values(by='Total Confirmed cases', ascending=False).head()
+
+dataset.sort_values(by=['Death', 'Total Confirmed cases'], ascending=[True, False]).head()
+
+dataset.sort_values(by=['Death', 'Total Confirmed cases'], ascending=[False, False]).head()
+
+dataset['New cases'].mean()
+
+dataset[dataset['New cases'] == 1].mean()
+
+dataset[dataset['New cases'] == 1]['New deaths'].mean()
+
+dataset.loc[0:5, 'Date':'Total Confirmed cases']
+
+dataset.iloc[0:5, 0:6]
+
+dataset[-1:]
+
+import numpy as np
+pd.set_option("display.precision", 2)
+dataset.apply(np.max)
+
+a=dataset['Name of State / UT'].unique()
+print(a)
+
+b=dataset['Name of State / UT'].nunique()
+print(b)
+
+c=dataset['Name of State / UT'].nunique(dropna=False)
+print(c)
+
+d=dataset.nunique()
+print(d)
+
+dataset[dataset['Name of State / UT'].apply(lambda state: state[0] == 'K')].head()
+
+kerala=dataset.loc[dataset['Name of State / UT']== "Kerala"]
+print(kerala)
+sumofkerala=kerala.sum()
+print(sumofkerala)
+
+kerala.hist(column='New deaths')
+
+columns_to_show = ['New cases','New deaths','New recovered']
+dataset.groupby(['Death'])[columns_to_show].describe(percentiles=[])
+
+columns_to_show = ['New cases','New deaths','New recovered']
+dataset.groupby(['Death'])[columns_to_show].agg([np.mean, np.std, np.min,np.max])
+
+pd.crosstab(dataset['Death'], dataset['New cases'])
+
+pd.crosstab(dataset['Death'], dataset['New deaths'])
+
+pd.crosstab(dataset['Death'], dataset['New deaths'], normalize=True)
+
+dataset.pivot_table(['New cases', 'New deaths', 'New recovered'],
+['Date'], aggfunc='mean')
+
+
+dataset['Death'].value_counts()
+
+dataset['Total_Death'] = dataset['Death'] + dataset['New deaths']
+dataset.head()
+dataset.tail()
+
+dataset.drop(['Total_Death'], axis=1)
+
+dataset.hist('Total_Death')
+
+data = Data1['New cases']
+df = pd.DataFrame(data=data)
+lines = df.plot.line()
+
+data = Data1['New cases']
+df = pd.DataFrame(data=data)
+bar = df.plot.bar()
+
+
